@@ -75,6 +75,11 @@
 
     // Switch page
     startBtn.addEventListener("click", () => {
+      
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.6;
+      music.play().catch(() => {}); // .catch for mobile autoplay issues
+      
       introPage.classList.add("hidden");
       questionPage.classList.remove("hidden");
     });
@@ -131,10 +136,6 @@
       result.classList.remove("hidden");
       noBtn.style.display = "none";
       yesBtn.style.display = "none";
-
-      const music = document.getElementById("bgMusic");
-      music.volume = 0.6;
-      music.play().catch(() => {}); // .catch for mobile autoplay issues
 
       // Confetti Burst
       confetti({
