@@ -58,6 +58,11 @@
     </p>
   </div>
 
+  <audio id="bgMusic" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+
   <script>
     const introPage = document.getElementById("introPage");
     const questionPage = document.getElementById("questionPage");
@@ -126,6 +131,10 @@
       result.classList.remove("hidden");
       noBtn.style.display = "none";
       yesBtn.style.display = "none";
+
+      const music = document.getElementById("bgMusic");
+      music.volume = 0.6;
+      music.play().catch(() => {}); // .catch for mobile autoplay issues
 
       // Confetti Burst
       confetti({
