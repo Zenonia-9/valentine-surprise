@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For You ❤️</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+</head>
+<body class="bg-pink-50 flex items-center justify-center min-h-screen overflow-hidden">
+
+  <!-- PAGE 1 : INTRO -->
+  <div id="introPage" class="text-center bg-white p-10 rounded-3xl shadow-xl max-w-md w-full">
+    <h1 class="text-2xl font-bold text-pink-600 mb-6">
+      Happy Valentine's Day ❤️
+    </h1>
+    
+    <p class="text-xl font-bold text-pink-600 mb-6">
+      Pudding Lay
+    </p>
+
+    <p class="text-lg text-gray-600 mb-8">
+      Roses are red 🌹 Violets are blue 💕 I have a little surprise for you…
+    </p>
+
+    <button id="startBtn"
+      class="bg-pink-500 hover:bg-pink-600 text-white px-10 py-3 rounded-2xl text-lg font-semibold transition">
+      Click Here! 💌
+    </button>
+  </div>
+
+  <div id="questionPage" class="hidden text-center bg-white p-10 rounded-3xl shadow-xl max-w-md w-full relative">
+    <h1 class="text-3xl font-bold text-pink-600 mb-6" id="question">
+      Will you marry me? 💍
+    </h1>
+
+    <div class="flex justify-center gap-6 mt-8 relative h-32" id="buttonArea">
+      <button id="yesBtn"
+        class="bg-pink-500 hover:bg-pink-600 text-white px-8 py-3 rounded-2xl text-lg font-semibold transition">
+        Yes ❤️
+      </button>
+
+      <button id="noBtn"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-800 px-8 py-3 rounded-2xl text-lg font-semibold transition absolute">
+        No 😢
+      </button>
+    </div>
+
+    <p class="mt-8 text-l text-pink-500 hidden" id="result">
+      Yay! You can’t escape my love 😝❤️.<br>
+      I knew you’d pick yes! <br>
+      Prepare for unlimited kisses.🤪❤️<br><br><br>
+      Happy Valentine Day ပါကွယ် မောင့်ပူတင်းလေးရေ❤️<br><br>
+
+      ဒီလောက်ထိ မောင့်အနားမှာနေပြီး မောင့်ကို အများကြီးချစ်ပေးလို့လဲ ကျေးဇူးပါကွယ်❤️<br><br>
+
+      နောင်နှစ်တွေ များကြီးထိ အတူတူရှိသွားကြမယ်နော်။ ချစ်တယ် ချစ်တယ် ချစ်တယ် အာဘွား🤪❤️
+    </p>
+  </div>
+
+  <script>
+    const introPage = document.getElementById("introPage");
+    const questionPage = document.getElementById("questionPage");
+    const startBtn = document.getElementById("startBtn");
+
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const result = document.getElementById("result");
+    const question = document.getElementById("question");
+
+    // Switch page
+    startBtn.addEventListener("click", () => {
+      introPage.classList.add("hidden");
+      questionPage.classList.remove("hidden");
+    });
+
+    const noMessages = [
+      "Are you sure? 😢",
+      "Really really sure? 🥺",
+      "Think again... ❤️",
+      "I will be sad... 😭",
+      "Last chance 👀",
+      "You are breaking my heart 💔",
+      "Okay okay calm down 😂",
+      "You can't catch me 😝"
+    ];
+
+    let noClickCount = 0;
+    let escapeMode = false;
+
+    
+    function moveNoButton() {
+      if (!escapeMode) return;
+      
+      const container = document.getElementById("buttonArea");
+      const rect = container.getBoundingClientRect();
+      const btnWidth = noBtn.offsetWidth;
+      const btnHeight = noBtn.offsetHeight;
+
+      const x = Math.random() * (rect.width - btnWidth);
+      const y = Math.random() * (rect.height - btnHeight);
+
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    noBtn.addEventListener("click", () => {
+      const message = noMessages[noClickCount % noMessages.length];
+      noBtn.innerText = message;
+
+      if (message === "You can't catch me 😝") {
+        escapeMode = true;
+        moveNoButton();
+      } else {
+        noClickCount++;
+        escapeMode = true;
+        moveNoButton();
+        escapeMode = false;
+      }
+    });
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+
+    yesBtn.addEventListener("click", () => {
+      question.innerText = "Yay!!! ❤️";
+      result.classList.remove("hidden");
+      noBtn.style.display = "none";
+      yesBtn.style.display = "none";
+
+      // Confetti Burst
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+
+      // Extra Confetti Waves
+      setTimeout(() => confetti({ particleCount: 100, spread: 100 }), 400);
+      setTimeout(() => confetti({ particleCount: 120, spread: 120 }), 800);
+    });
+
+    // Initial position safe away from Yes button
+    noBtn.style.left = "0px";
+    noBtn.style.top = "60px";
+  </script>
+
+</body>
+</html>
